@@ -11,7 +11,7 @@
 ### ORGANIZACJA PRACY
 
 ##### Grupa pracuje na branchu DEV, na który zamieszczają pliki .sql nazwane opisem zadania, 
-##### commit nazwywany jest nazwą klucza zadania z JIRA-Opis (np. ESP-1-Co zostało wykonane)
+##### commit nazywany jest nazwą klucza zadania z JIRA-Opis (np. ESP-1-Co zostało wykonane)
 ##### Branch MASTER ma być używany tylko dla analiz, które okarzą się znaczące i przyniosą wnioski biznesowe
 
 ### CEL PROJEKTU
