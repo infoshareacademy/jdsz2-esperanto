@@ -26,3 +26,13 @@ SELECT id,
 
 -- wniosek: na tyle mały procent wniosków z różnicami,
 -- że nie warto się tym zajmować
+
+-- roznica rekompensat na osobe
+-- wniosek mamy kilka id wniosków z wysoką różnicą rekompensat
+SELECT id,
+  liczba_pasazerow,
+    kwota_rekompensaty/liczba_pasazerow as rek_na_os,
+  (kwota_rekompensaty-kwota_rekompensaty_oryginalna)
+    /liczba_pasazerow as roznica_rek_na_os
+FROM wnioski
+ORDER BY roznica_rek_na_os ;
