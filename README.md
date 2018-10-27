@@ -1,1 +1,0 @@
-# jdsz2-esperanto
