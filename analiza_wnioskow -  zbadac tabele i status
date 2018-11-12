@@ -25,14 +25,7 @@ from
   analizy_wnioskow
 group by
   id_agenta
-having
-  (count(id_agenta) <> count(case when status = 'odrzucony' then id_agenta end))
-  and
-  (count(id_agenta) <> count(case when status = 'zaakceptowany' then id_agenta end))
 order by 2 desc;
 
-select count(id_agenta), id_agenta, status from analizy_wnioskow
-where status = 'odrzucony'
-group by status, id_agenta;
 
 
