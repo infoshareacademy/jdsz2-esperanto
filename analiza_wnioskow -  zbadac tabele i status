@@ -14,18 +14,23 @@ order by count (nr_referencyjny) desc;
 
 Select count(1) from analizy_wnioskow;
 
-Select
+with analizy as
+(Select
   id_agenta,
   count(id_agenta) as ilosc_analiz,
   count(case when status = 'odrzucony' then id_agenta end) as ilosc_odrzuconych,
-  count(case when status = 'zaakceptowany' then id_agenta end) as ilosc_zaakceptowanych,
-  (100*(count(case when status = 'odrzucony' then id_agenta end)) / (count(id_agenta))) as proc_odrzuc,
-  (100*(count(case when status = 'zaakceptowany' then id_agenta end)) / (count(id_agenta))) as proc_zaakceptowanych
+  count(case when status = 'zaakceptowany' then id_agenta end) as ilosc_zaakceptowanych
 from
   analizy_wnioskow
 group by
   id_agenta
-order by 2 desc;
+order by 2 desc)
+
+Select id_agenta, ilosc_analiz,
+  ilosc_odrzuconych / ilosc_analiz::numeric as proc_odrzuconych,
+  ilosc_zaakceptowanych / ilosc_analiz::numeric as proc_zaakceptowanych
+ from analizy
+ where ilosc_analiz > 50
 
 
 

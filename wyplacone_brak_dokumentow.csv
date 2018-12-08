@@ -1,0 +1,3 @@
+count,id,data_utworzenia,kwota_rekompensaty,identyfikator_operator_operujacego,stan_wniosku,odp_operatora,id_agenta
+1,36710,2015-04-24 06:03:28.481868,250.00,TLK,wyplacony,odrzucony,32
+1,36937,2015-04-27 11:13:31.192766,250.00,,wyplacony,odrzucony,34
