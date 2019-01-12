@@ -1,0 +1,4 @@
+select  count (id_podrozy), id_podrozy, numer_pociagu
+from szczegoly_podrozy
+group by  id_podrozy, numer_pociagu
+order by 1 desc
