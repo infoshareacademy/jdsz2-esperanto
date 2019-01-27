@@ -1,11 +1,9 @@
+import statistics
 import sys
 import time
 
 import numpy as np
-import scipy as sp
 from scipy.stats import norm, kstest
-import matplotlib.pyplot as plt
-import statistics
 
 
 def generator_liczb_losowych(xmin, xmax, n):
