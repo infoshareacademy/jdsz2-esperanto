@@ -1,7 +1,8 @@
 import statistics
 import sys
 import time
-
+import matplotlib.pyplot as plt
+import matplotlib.mlab as mlab
 import numpy as np
 from scipy.stats import norm, kstest, shapiro
 
@@ -18,8 +19,8 @@ from scipy.stats import norm, kstest, shapiro
 #           zatem rozklad naszej zmiennej nie jest rozkladem normalnym
 
 
-x= norm.rvs(size = 1000)
 
+x= norm.rvs(size = 1000)
 #alfa to przyjety przez nas poziom istotnosci, domyslnie wynosi 0,05
 def SW(x,alfa=0.05):
     W, p_sw = shapiro(x)
@@ -48,3 +49,13 @@ def KS(x,alfa=0.05):
 print('Test S-W:', SW(x, alfa=0.1))
 print()
 print('Test K-S:', KS(x))
+
+
+(mu, sigma) = norm.fit(x)
+n, bins, patches = plt.hist(x, 60, density=1)
+y = norm.pdf(bins, mu, sigma)
+plt.plot(bins, y, 'r--', linewidth = 2)
+plt.ylabel('y')
+plt.xlabel('X')
+plt.title('Histogram wygenerowanych liczb z dopasowanym rozkładem normalnym')
+plt.show()
