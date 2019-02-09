@@ -35,12 +35,14 @@ if __name__ == '__main__':
         sys.stdout.write("\rZostało jeszcze kroków: %d" % count)
         sys.stdout.flush()
     print("\n", statistics.mean(ds), statistics.mean(ps))
+    print(wynik)
+    print(len(wynik))
 
 
 # Testy Shapiro-Wilka i Kolmogorova-Smirnova dla losowych liczb z rozkładu normalnego
 
-x= norm.rvs(size = 1000)
-W, p_sw = shapiro(x)
-D, p_ks = kstest(x, 'norm', args=(np.mean(x), np.std(x, ddof=1)))
+#x= norm.rvs(size = 1000)
+#W, p_sw = shapiro(x)
+#D, p_ks = kstest(x, 'norm', args=(np.mean(x), np.std(x, ddof=1)))
 
-print('SW: {}, KS: {}'.format(p_sw, p_ks))
+#print('SW: {}, KS: {}'.format(p_sw, p_ks))
