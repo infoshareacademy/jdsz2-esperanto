@@ -41,6 +41,7 @@ def KS(x,alfa=0.05):
 
 liczba_ks = 0
 liczba_sw = 0
+
 n = 10
 u = 1000
 
