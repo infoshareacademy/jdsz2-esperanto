@@ -13,19 +13,19 @@ rozkladem normalnym
 
 def generator_liczb_losowych(xmin, xmax, n):
     max_wartosc_funkcji = max([norm.pdf(c) for c in np.arange(xmin, xmax, (xmax-xmin)/n)])
-    # print(max_wartosc_funkcji, [x for x in np.arange(xmin, xmax, (xmax-xmin)/n)])
     losowe = []
-
+    count = 0
     while len(losowe) < n:
         r = np.random.uniform()
         x = np.random.uniform(low=xmin, high=xmax)
         if r < norm.pdf(x)/max_wartosc_funkcji:
             losowe.append(x)
+        else:
+            count += 1
+    return losowe, count
 
-    return losowe
-
-x = generator_liczb_losowych(-3,3,1000)
-print(x)
+x, b =generator_liczb_losowych(-3,3,1000)
+print('Liczba losowan, ktorej wynikiem bylo {} liczb: {}'.format(len(x),b))
 
 (mu, sigma) = norm.fit(x)
 n, bins, patches = plt.hist(x, 60, density=1)

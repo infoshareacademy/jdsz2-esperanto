@@ -47,17 +47,18 @@ def KS(x,alfa=0.05):
 
 liczba_ks= 0
 liczba_sw = 0
-n = 10000
+n = 1000
+u = 1000
 for i in range(n):
-    i = norm.rvs(size = 1000)
+    i = norm.rvs(size = u)
     x = i
     KS(x)
     SW(x)
     liczba_ks += KS(x)
     liczba_sw += SW(x)
 
-print('Test KS dla {} prob: {}'.format(n, liczba_ks / n))
-print('Test SW dla {} prob: {}'.format(n, liczba_sw / n))
+print('Test KS dla {} losowan {} liczb: {}'.format(n, u, liczba_ks/n))
+print('Test SW dla {} losowan {} liczb: {}'.format(n, u, liczba_sw/n))
 #print('Test S-W:', SW(x, alfa=0.1))
 #print()
 #print('Test K-S:', KS(x))
