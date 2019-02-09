@@ -20,7 +20,9 @@ def generator_liczb_losowych(xmin, xmax, n):
             count += 1
     return losowe, count
 
+print(generator_liczb_losowych(-3,-3,1000))
 
+"""
 if __name__ == '__main__':
     count = 50
     ds = []
@@ -37,7 +39,7 @@ if __name__ == '__main__':
     print("\n", statistics.mean(ds), statistics.mean(ps))
     print(wynik)
     print(len(wynik))
-
+"""
 
 # Testy Shapiro-Wilka i Kolmogorova-Smirnova dla losowych liczb z rozkładu normalnego
 
