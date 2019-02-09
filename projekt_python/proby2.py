@@ -49,10 +49,12 @@ def KS(x,alfa=0.05):
 #print('SW: {}, KS: {}'.format(p_sw, p_ks))
 
 liczba = 0
-for i in range(0,1000,1):
+n = 10
+for i in range(0,n,1):
     i, miss_count = generator_liczb_losowych(-3, 3, 1000)
     x = i
     KS(x)
     liczba += KS(x)
+    valid = liczba/n
 
-print(liczba)
+print(liczba, valid)
