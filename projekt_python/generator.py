@@ -17,9 +17,16 @@ def generator_liczb_losowych(xmin, xmax, n):
     return losowe, count
 
 
-a, b =generator_liczb_losowych(-3,3,1000)
-print(len(a))
-print('Liczba losowan, ktorej wynikiem bylo 1000 liczb:',b)
+wszystkie = []
+n = 10
+u = 10
+for i in range(n):
+    b = generator_liczb_losowych(-3,3,u)[1]
+    wszystkie.append(b)
+
+srednia = np.mean(wszystkie)
+print(srednia)
+
 
 
 

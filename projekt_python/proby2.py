@@ -8,7 +8,7 @@ def SW(x, alfa=0.05):
     # print('Test Shapiro-Wilka:\n p-value = ',p_sw)
     if p_sw < alfa:
         return 0
-        # rint('Badany rozklad nie jest rozkladem normalnym na poziomie istotnosci %a.'%alfa)
+        # print('Badany rozklad nie jest rozkladem normalnym na poziomie istotnosci %a.'%alfa)
     return 1
         # print('Badany rozklad jest rozkladem normalnym na poziomie istotnosci %a.'%alfa)
 

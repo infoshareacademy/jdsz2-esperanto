@@ -1,7 +1,11 @@
+import statistics
 import sys
 import numpy as np
 from scipy.stats import norm, kstest, shapiro
 import matplotlib.pyplot as plt
+import matplotlib.mlab as mlab
+
+# -- author: -- Karolina / Justyna / Karol / Lukasz --
 
 def generator_liczb_losowych(xmin, xmax, n):
     max_wartosc_funkcji = max([norm.pdf(c) for c in np.arange(xmin, xmax, (xmax-xmin)/n)])
@@ -35,12 +39,13 @@ def KS(x,alfa=0.05):
 
 liczba_ks = 0
 liczba_sw = 0
-n = 10 # liczba losowan
-u = 4000 # zbior
+
+n = 10
+u = 1000
 
 for i in range(n):
-    #i = generator_liczb_losowych(-3, 3, u)
     i = norm.rvs(size=u)
+#   i = generator_liczb_losowych(-3, 3, u)
     x = i
     KS(x)
     SW(x)
