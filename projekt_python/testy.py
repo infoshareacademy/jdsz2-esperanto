@@ -43,27 +43,30 @@ def KS(x,alfa=0.05):
 
 #print('Kolmogorova-Smirnova:\n p-value = {}\n Odrzucic hipoteze zerowa? {}'.format(p_ks, p_ks < 0.05))
 #print('SW: {}, KS: {}'.format(p_sw, p_ks))
-# liczba = 0
-# n = 10000
-# for i in range(n):
-#     i = norm.rvs(size = 1000)
-#
-#     x = i
-#     KS(x)
-#     liczba += KS(x)
-# print(liczba)
-# print(float(liczba/n))
 
+liczba_ks= 0
+liczba_sw = 0
+n = 10000
+for i in range(n):
+    i = norm.rvs(size = 1000)
+    x = i
+    KS(x)
+    SW(x)
+    liczba_ks += KS(x)
+    liczba_sw += SW(x)
+
+print('Test KS dla {} prob: {}'.format(n, liczba_ks / n))
+print('Test SW dla {} prob: {}'.format(n, liczba_sw / n))
 #print('Test S-W:', SW(x, alfa=0.1))
 #print()
 #print('Test K-S:', KS(x))
 
 
-(mu, sigma) = norm.fit(x)
-n, bins, patches = plt.hist(x, 60, density=1)
-y = norm.pdf(bins, mu, sigma)
-plt.plot(bins, y, 'r--', linewidth = 2)
-plt.ylabel('y')
-plt.xlabel('X')
-plt.title('Histogram wygenerowanych liczb z dopasowanym rozkładem normalnym')
-plt.show()
+# (mu, sigma) = norm.fit(x)
+# n, bins, patches = plt.hist(x, 60, density=1)
+# y = norm.pdf(bins, mu, sigma)
+# plt.plot(bins, y, 'r--', linewidth = 2)
+# plt.ylabel('y')
+# plt.xlabel('X')
+# plt.title('Histogram wygenerowanych liczb z dopasowanym rozkładem normalnym')
+# plt.show()
