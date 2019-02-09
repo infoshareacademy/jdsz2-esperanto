@@ -12,15 +12,14 @@ def generator_liczb_losowych(xmin, xmax, n):
     max_wartosc_funkcji = max([norm.pdf(c) for c in np.arange(xmin, xmax, (xmax-xmin)/n)])
     # print(max_wartosc_funkcji, [x for x in np.arange(xmin, xmax, (xmax-xmin)/n)])
     losowe = []
-    count = 0
+
     while len(losowe) < n:
         r = np.random.uniform()
         x = np.random.uniform(low=xmin, high=xmax)
         if r < norm.pdf(x)/max_wartosc_funkcji:
             losowe.append(x)
-        else:
-            count += 1
-    return losowe, count
+
+    return losowe
 
 
 
@@ -48,11 +47,16 @@ def KS(x,alfa=0.05):
 #print('Kolmogorova-Smirnova:\n p-value = {}\n Odrzucic hipoteze zerowa? {}'.format(p_ks, p_ks < 0.05))
 #print('SW: {}, KS: {}'.format(p_sw, p_ks))
 
-liczba = 0
-for i in range(0,1000,1):
-    i, miss_count = generator_liczb_losowych(-3, 3, 1000)
+liczba_ks = 0
+liczba_sw = 0
+n = 10
+for i in range(n):
+    i = generator_liczb_losowych(-3, 3, 1000)
     x = i
     KS(x)
-    liczba += KS(x)
+    SW(x)
+    liczba_ks += KS(x)
+    liczba_sw += SW(x)
 
-print(liczba)
+print('Test KS dla {} prob: {}'.format(n, liczba_ks/n))
+print('Test SW dla {} prob: {}'.format(n, liczba_sw/n))

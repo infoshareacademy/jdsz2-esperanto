@@ -45,10 +45,20 @@ def KS(x,alfa=0.05):
 
 #print('Kolmogorova-Smirnova:\n p-value = {}\n Odrzucic hipoteze zerowa? {}'.format(p_ks, p_ks < 0.05))
 #print('SW: {}, KS: {}'.format(p_sw, p_ks))
+# liczba = 0
+# n = 10000
+# for i in range(n):
+#     i = norm.rvs(size = 1000)
+#
+#     x = i
+#     KS(x)
+#     liczba += KS(x)
+# print(liczba)
+# print(float(liczba/n))
 
-print('Test S-W:', SW(x, alfa=0.1))
-print()
-print('Test K-S:', KS(x))
+#print('Test S-W:', SW(x, alfa=0.1))
+#print()
+#print('Test K-S:', KS(x))
 
 
 (mu, sigma) = norm.fit(x)
