@@ -28,8 +28,7 @@ def SW(x,alfa=0.05):
     if p_sw < alfa:
         return 0
         #print('Badany rozklad nie jest rozkladem normalnym na poziomie istotnosci %a.'%alfa)
-    else:
-        return 1
+    return 1
         #print('Badany rozklad jest rozkladem normalnym na poziomie istotnosci %a.'%alfa)
 
 
@@ -39,8 +38,7 @@ def KS(x,alfa=0.05):
     if p_ks < alfa:
         return 0
         #print('Badany rozklad nie jest rozkladem normalnym na poziomie istotnosci %a.'%alfa)
-    else:
-        return 1
+    return 1
         #print('Badany rozklad jest rozkladem normalnym na poziomie istotnosci %a.'%alfa)
 
 #print('Kolmogorova-Smirnova:\n p-value = {}\n Odrzucic hipoteze zerowa? {}'.format(p_ks, p_ks < 0.05))
