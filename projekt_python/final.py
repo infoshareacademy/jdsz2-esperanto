@@ -1,17 +1,10 @@
-import statistics
 import sys
-import time
-import pickle
 import numpy as np
 from scipy.stats import norm, kstest, shapiro
 import matplotlib.pyplot as plt
-import matplotlib.mlab as mlab
-
-
 
 def generator_liczb_losowych(xmin, xmax, n):
     max_wartosc_funkcji = max([norm.pdf(c) for c in np.arange(xmin, xmax, (xmax-xmin)/n)])
-    # print(max_wartosc_funkcji, [x for x in np.arange(xmin, xmax, (xmax-xmin)/n)])
     losowe = []
 
     while len(losowe) < n:
@@ -23,38 +16,30 @@ def generator_liczb_losowych(xmin, xmax, n):
     return losowe
 
 
-
+#Test Shapiro-Wilka
 def SW(x,alfa=0.05):
     W, p_sw = shapiro(x)
-    #print('Test Shapiro-Wilka:\n p-value = ',p_sw)
     if p_sw < alfa:
         return 0
-        #print('Badany rozklad nie jest rozkladem normalnym na poziomie istotnosci %a.'%alfa)
     else:
         return 1
-        #print('Badany rozklad jest rozkladem normalnym na poziomie istotnosci %a.'%alfa)
 
-
+# Test Kolmogorova-Smirnova
 def KS(x,alfa=0.05):
     D, p_ks = kstest(x, 'norm', args=(np.mean(x), np.std(x, ddof=1)))
-    #print('Test Kolmogorova-Smirnova:\n p-value = ',p_ks)
     if p_ks < alfa:
         return 0
-        #print('Badany rozklad nie jest rozkladem normalnym na poziomie istotnosci %a.'%alfa)
     else:
         return 1
-        #print('Badany rozklad jest rozkladem normalnym na poziomie istotnosci %a.'%alfa)
 
-#print('Kolmogorova-Smirnova:\n p-value = {}\n Odrzucic hipoteze zerowa? {}'.format(p_ks, p_ks < 0.05))
-#print('SW: {}, KS: {}'.format(p_sw, p_ks))
 
 liczba_ks = 0
 liczba_sw = 0
-n = 40
-u = 1000
+n = 10 # liczba losowan
+u = 4000 # zbior
 
 for i in range(n):
-    #i = generator_liczb_losowych(-3, 3, u)  # FIXME: dlaczego nadpisujesz tutaj zmienną i?
+    #i = generator_liczb_losowych(-3, 3, u)
     i = norm.rvs(size=u)
     x = i
     KS(x)
@@ -68,3 +53,12 @@ sys.stdout = open('results.csv', 'a')
 print('losowe Ko-Sm, {}, {}, {}'.format(n, u, liczba_ks/n))
 print('losowe Sh-Wi, {}, {}, {}'.format(n, u, liczba_sw/n))
 sys.stdout.close()
+
+(mu, sigma) = norm.fit(x)
+n, bins, patches = plt.hist(x, 60, density=1)
+y = norm.pdf(bins, mu, sigma)
+plt.plot(bins, y, 'r--', linewidth = 2)
+plt.ylabel('y')
+plt.xlabel('X')
+plt.title('Histogram wygenerowanych liczb z dopasowanym rozkładem normalnym')
+plt.show()
