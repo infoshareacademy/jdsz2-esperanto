@@ -1,5 +1,4 @@
-Sprawdzenie wynikow testu z generatora
-Test, il_losowan, zbior, wynik
+Test, il_losowan, zbior generator, wynik
 Test KS, 40, 1000, 1.0
 Test SW, 40, 1000, 0.925
 Test KS, 100, 1000, 1.0
@@ -17,8 +16,7 @@ Test SW, 10, 4000, 0.3
 Test KS, 10, 100000, 0.9
 Test SW, 10, 100000, 0.0
 
-Sprawdzenie wynikow testu dla liczb losowych z rozkladu normalnego
-Test, il_losowan, zbior, wynik
+Test, il_losowan, zbior losowy, wynik
 Test KS, 40, 1000, 1.0
 Test SW, 40, 1000, 0.925
 Test KS, 100, 1000, 1.0
