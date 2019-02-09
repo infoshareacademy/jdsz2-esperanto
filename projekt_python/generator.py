@@ -20,7 +20,9 @@ def generator_liczb_losowych(xmin, xmax, n):
             count += 1
     return losowe, count
 
-print(generator_liczb_losowych(-3,-3,1000))
+a, b =generator_liczb_losowych(-3,3,1000)
+print(len(a))
+print('Liczba losowan, ktorej wynikiem bylo 1000 liczb:',b)
 
 """
 if __name__ == '__main__':
