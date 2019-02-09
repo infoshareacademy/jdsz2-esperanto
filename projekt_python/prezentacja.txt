@@ -1,0 +1,5 @@
+1. Przedstawienie metody
+2. zaprezentowanie generatora
+3. Generator ile odrzuca??????
+4. Przedstawienie na wykresie wygenerowanych liczb
+5. Zaprezentowanie wyników dla różnych wielkości prób

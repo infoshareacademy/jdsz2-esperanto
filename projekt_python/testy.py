@@ -20,40 +20,54 @@ from scipy.stats import norm, kstest, shapiro
 
 
 
-x= norm.rvs(size = 1000)
-#alfa to przyjety przez nas poziom istotnosci, domyslnie wynosi 0,05
+x = norm.rvs(size = 1000)
+# alfa to przyjety przez nas poziom istotnosci, domyslnie wynosi 0,05
 def SW(x,alfa=0.05):
     W, p_sw = shapiro(x)
-    #print('Test Shapiro-Wilka:\n p-value = ',p_sw)
+    # print('Test Shapiro-Wilka:\n p-value = ',p_sw)
     if p_sw < alfa:
         return 0
-        #print('Badany rozklad nie jest rozkladem normalnym na poziomie istotnosci %a.'%alfa)
+        # print('Badany rozklad nie jest rozkladem normalnym na poziomie istotnosci %a.'%alfa)
     return 1
-        #print('Badany rozklad jest rozkladem normalnym na poziomie istotnosci %a.'%alfa)
+        # print('Badany rozklad jest rozkladem normalnym na poziomie istotnosci %a.'%alfa)
 
 
 def KS(x,alfa=0.05):
     D, p_ks = kstest(x, 'norm', args=(np.mean(x), np.std(x, ddof=1)))
-    #print('Test Kolmogorova-Smirnova:\n p-value = ',p_ks)
+    # print('Test Kolmogorova-Smirnova:\n p-value = ',p_ks)
     if p_ks < alfa:
         return 0
-        #print('Badany rozklad nie jest rozkladem normalnym na poziomie istotnosci %a.'%alfa)
+        # print('Badany rozklad nie jest rozkladem normalnym na poziomie istotnosci %a.'%alfa)
     return 1
-        #print('Badany rozklad jest rozkladem normalnym na poziomie istotnosci %a.'%alfa)
+    # print('Badany rozklad jest rozkladem normalnym na poziomie istotnosci %a.'%alfa)
 
-#print('Kolmogorova-Smirnova:\n p-value = {}\n Odrzucic hipoteze zerowa? {}'.format(p_ks, p_ks < 0.05))
-#print('SW: {}, KS: {}'.format(p_sw, p_ks))
-
-print('Test S-W:', SW(x, alfa=0.1))
-print()
-print('Test K-S:', KS(x))
+# print('Kolmogorova-Smirnova:\n p-value = {}\n Odrzucic hipoteze zerowa? {}'.format(p_ks, p_ks < 0.05))
+# print('SW: {}, KS: {}'.format(p_sw, p_ks))
 
 
-(mu, sigma) = norm.fit(x)
-n, bins, patches = plt.hist(x, 60, density=1)
-y = norm.pdf(bins, mu, sigma)
-plt.plot(bins, y, 'r--', linewidth = 2)
-plt.ylabel('y')
-plt.xlabel('X')
-plt.title('Histogram wygenerowanych liczb z dopasowanym rozkładem normalnym')
-plt.show()
+liczba_ks= 0
+liczba_sw = 0
+n = 10000
+for i in range(n):
+    i = norm.rvs(size = 1000)
+    x = i
+    KS(x)
+    SW(x)
+    liczba_ks += KS(x)
+    liczba_sw += SW(x)
+
+print('Test KS dla {} prob: {}'.format(n, liczba_ks / n))
+print('Test SW dla {} prob: {}'.format(n, liczba_sw / n))
+#print('Test S-W:', SW(x, alfa=0.1))
+#print()
+#print('Test K-S:', KS(x))
+
+
+# (mu, sigma) = norm.fit(x)
+# n, bins, patches = plt.hist(x, 60, density=1)
+# y = norm.pdf(bins, mu, sigma)
+# plt.plot(bins, y, 'r--', linewidth = 2)
+# plt.ylabel('y')
+# plt.xlabel('X')
+# plt.title('Histogram wygenerowanych liczb z dopasowanym rozkładem normalnym')
+# plt.show()

@@ -1,7 +1,3 @@
-import statistics
-import sys
-import time
-
 import numpy as np
 from scipy.stats import norm, kstest, shapiro
 
@@ -21,6 +17,13 @@ def generator_liczb_losowych(xmin, xmax, n):
     return losowe, count
 
 
+a, b =generator_liczb_losowych(-3,3,1000)
+print(len(a))
+print('Liczba losowan, ktorej wynikiem bylo 1000 liczb:',b)
+
+
+
+"""
 if __name__ == '__main__':
     count = 50
     ds = []
@@ -37,7 +40,7 @@ if __name__ == '__main__':
     print("\n", statistics.mean(ds), statistics.mean(ps))
     print(wynik)
     print(len(wynik))
-
+"""
 
 # Testy Shapiro-Wilka i Kolmogorova-Smirnova dla losowych liczb z rozkładu normalnego
 
