@@ -1,6 +1,7 @@
 import statistics
 import sys
 import time
+import pickle
 import numpy as np
 from scipy.stats import norm, kstest, shapiro
 import matplotlib.pyplot as plt
@@ -12,15 +13,14 @@ def generator_liczb_losowych(xmin, xmax, n):
     max_wartosc_funkcji = max([norm.pdf(c) for c in np.arange(xmin, xmax, (xmax-xmin)/n)])
     # print(max_wartosc_funkcji, [x for x in np.arange(xmin, xmax, (xmax-xmin)/n)])
     losowe = []
-    count = 0
+
     while len(losowe) < n:
         r = np.random.uniform()
         x = np.random.uniform(low=xmin, high=xmax)
         if r < norm.pdf(x)/max_wartosc_funkcji:
             losowe.append(x)
-        else:
-            count += 1
-    return losowe, count
+
+    return losowe
 
 
 
@@ -48,13 +48,20 @@ def KS(x,alfa=0.05):
 #print('Kolmogorova-Smirnova:\n p-value = {}\n Odrzucic hipoteze zerowa? {}'.format(p_ks, p_ks < 0.05))
 #print('SW: {}, KS: {}'.format(p_sw, p_ks))
 
-liczba = 0
+liczba_ks = 0
+liczba_sw = 0
 n = 10
-for i in range(0,n,1):
-    i, miss_count = generator_liczb_losowych(-3, 3, 1000)
+u = 3000
+
+for i in range(n):
+    i = generator_liczb_losowych(-3, 3, u)  # FIXME: dlaczego nadpisujesz tutaj zmienną i?
     x = i
     KS(x)
-    liczba += KS(x)
-    valid = n/liczba
+    SW(x)
+    liczba_ks += KS(x)
+    liczba_sw += SW(x)
 
-print('Dataset: {}, KS: {}'.format(n, valid))
+sys.stdout = open('results.csv', 'a')
+print('Test KS dla {} prob i {} liczb: {}'.format(n, u, liczba_ks/n))
+print('Test SW dla {} prob i {} liczb: {}'.format(n, u, liczba_sw/n))
+sys.stdout.close()
