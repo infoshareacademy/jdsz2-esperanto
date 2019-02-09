@@ -50,11 +50,12 @@ def KS(x,alfa=0.05):
 
 liczba_ks = 0
 liczba_sw = 0
-n = 100
-u = 3000
+n = 40
+u = 1000
 
 for i in range(n):
-    i = generator_liczb_losowych(-3, 3, u)  # FIXME: dlaczego nadpisujesz tutaj zmienną i?
+    #i = generator_liczb_losowych(-3, 3, u)  # FIXME: dlaczego nadpisujesz tutaj zmienną i?
+    i = norm.rvs(size=u)
     x = i
     KS(x)
     SW(x)
@@ -62,6 +63,6 @@ for i in range(n):
     liczba_sw += SW(x)
 
 sys.stdout = open('results.csv', 'a')
-print('Test KS dla, {}, losowan i, {}, liczb:, {}'.format(n, u, liczba_ks/n))
-print('Test SW dla, {}, losowan i, {}, liczb:, {}'.format(n, u, liczba_sw/n))
+print('Test KS, {}, {}, {}'.format(n, u, liczba_ks/n))
+print('Test SW, {}, {}, {}'.format(n, u, liczba_sw/n))
 sys.stdout.close()

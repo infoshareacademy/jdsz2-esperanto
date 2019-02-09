@@ -1,12 +1,37 @@
-Test KS dla, 40, losowan i, 1000, liczb:, 1.0
-Test SW dla, 40, losowan i, 1000, liczb:, 0.925
-Test KS dla, 100, losowan i, 1000, liczb:, 1.0
-Test SW dla, 100, losowan i, 1000, liczb:, 0.96
-Test KS dla, 10, losowan i, 2000, liczb:, 1.0
-Test SW dla, 10, losowan i, 2000, liczb:, 0.7
-Test KS dla, 100, losowan i, 2000, liczb:, 1.0
-Test SW dla, 100, losowan i, 2000, liczb:, 0.8
-Test KS dla, 10, losowan i, 3000, liczb:, 1.0
-Test SW dla, 10, losowan i, 3000, liczb:, 0.6
-Test KS dla, 100, losowan i, 3000, liczb:, 1.0
-Test SW dla, 100, losowan i, 3000, liczb:, 0.51
+Sprawdzenie wynikow testu z generatora
+Test, il_losowan, zbior, wynik
+Test KS, 40, 1000, 1.0
+Test SW, 40, 1000, 0.925
+Test KS, 100, 1000, 1.0
+Test SW, 100, 1000, 0.96
+Test KS, 10, 2000, 1.0
+Test SW, 10, 2000, 0.7
+Test KS, 100, 2000, 1.0
+Test SW, 100, 2000, 0.8
+Test KS, 10, 3000, 1.0
+Test SW, 10, 3000, 0.6
+Test KS, 100, 3000, 1.0
+Test SW, 100, 3000, 0.51
+Test KS, 10, 4000, 1.0
+Test SW, 10, 4000, 0.3
+Test KS, 10, 100000, 0.9
+Test SW, 10, 100000, 0.0
+
+Sprawdzenie wynikow testu dla liczb losowych z rozkladu normalnego
+Test, il_losowan, zbior, wynik
+Test KS, 40, 1000, 1.0
+Test SW, 40, 1000, 0.925
+Test KS, 100, 1000, 1.0
+Test SW, 100, 1000, 0.96
+Test KS, 10, 2000, 1.0
+Test SW, 10, 2000, 0.9
+Test KS, 100, 2000, 1.0
+Test SW, 100, 2000, 0.96
+Test KS, 10, 3000, 1.0
+Test SW, 10, 3000, 1.0
+Test KS, 100, 3000, 1.0
+Test SW, 100, 3000, 0.94
+Test KS, 10, 4000, 1.0
+Test SW, 10, 4000, 1.0
+Test KS, 10, 100000, 1.0
+Test SW, 10, 100000, 1.0
