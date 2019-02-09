@@ -62,6 +62,6 @@ for i in range(n):
     liczba_sw += SW(x)
 
 sys.stdout = open('results.csv', 'a')
-print('Test KS dla, {}, prob i, {}, liczb:, {}'.format(n, u, liczba_ks/n))
-print('Test SW dla, {}, prob i, {}, liczb:, {}'.format(n, u, liczba_sw/n))
+print('Test KS dla, {}, losowan i, {}, liczb:, {}'.format(n, u, liczba_ks/n))
+print('Test SW dla, {}, losowan i, {}, liczb:, {}'.format(n, u, liczba_sw/n))
 sys.stdout.close()
