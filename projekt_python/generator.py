@@ -1,7 +1,3 @@
-import statistics
-import sys
-import time
-
 import numpy as np
 from scipy.stats import norm, kstest, shapiro
 
@@ -20,7 +16,8 @@ def generator_liczb_losowych(xmin, xmax, n):
             count += 1
     return losowe, count
 
-print(generator_liczb_losowych(-3,-3,1000))
+
+print(generator_liczb_losowych(-3, -3, 1000))
 
 """
 if __name__ == '__main__':
