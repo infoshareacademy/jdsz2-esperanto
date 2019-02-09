@@ -54,6 +54,8 @@ for i in range(n):
     liczba_sw += SW(x)
 
 sys.stdout = open('results.csv', 'a')
+
 print('Test KS dla {} losowan {} liczb: {}'.format(n, u, liczba_ks/n))
 print('Test SW dla {} losowan {} liczb: {}'.format(n, u, liczba_sw/n))
+
 sys.stdout.close()
