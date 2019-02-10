@@ -41,7 +41,7 @@ liczba_ks = 0
 liczba_sw = 0
 
 n = 100
-u = 2000
+u = 4000
 
 for i in range(n):
 #    i = norm.rvs(size=u)
@@ -53,10 +53,10 @@ for i in range(n):
     liczba_sw += SW(x)
 
 sys.stdout = open('results2.csv', 'a')
-print('generator Ko-Sm, {}, {}, {}'.format(n, u, liczba_ks/n))
-print('generator Sh-Wi, {}, {}, {}'.format(n, u, liczba_sw/n))
-#print('losowe Ko-Sm, {}, {}, {}'.format(n, u, liczba_ks/n))
-#print('losowe Sh-Wi, {}, {}, {}'.format(n, u, liczba_sw/n))
+print('generator Ko-Sm,{},{},{}'.format(n, u, liczba_ks/n))
+print('generator Sh-Wi,{},{},{}'.format(n, u, liczba_sw/n))
+#print('losowe Ko-Sm,{},{},{}'.format(n, u, liczba_ks/n))
+#print('losowe Sh-Wi,{},{},{}'.format(n, u, liczba_sw/n))
 sys.stdout.close()
 
 (mu, sigma) = norm.fit(x)
