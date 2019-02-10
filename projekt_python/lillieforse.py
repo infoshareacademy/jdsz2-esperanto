@@ -35,8 +35,8 @@ def L(x, alfa=0.05):
 
 liczba_l = 0
 
+n = 10
 u = 100
-n = 3000
 
 for i in range(n):
     i = generator_liczb_losowych(-3, 3, u)
@@ -51,6 +51,6 @@ for i in range(n):
     L(x)
     liczba_los += L(x)
 sys.stdout = open('results_lillieforse.csv', 'a')
-print('Test L dla {} losowan z generatora {} liczb: {}'.format(u, n, liczba_l/n))
-print('Test L dla {} losowan z normalnego {} liczb: {}'.format(u, n, liczba_los/n))
+print('Test L dla {} losowan z generatora {} liczb: {}'.format(n, u, liczba_l/n))
+print('Test L dla {} losowan z normalnego {} liczb: {}'.format(n, u, liczba_los/n))
 sys.stdout.close()
