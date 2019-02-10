@@ -1,13 +1,11 @@
 import statistics
 import sys
-import time
-import pickle
 import numpy as np
 from scipy.stats import norm, kstest, shapiro
 import matplotlib.pyplot as plt
 import matplotlib.mlab as mlab
 
-
+# -- author: -- Karolina / Justyna / Karol / Lukasz --
 
 def generator_liczb_losowych(xmin, xmax, n):
     max_wartosc_funkcji = max([norm.pdf(c) for c in np.arange(xmin, xmax, (xmax-xmin)/n)])
@@ -32,7 +30,9 @@ def SW(x,alfa=0.05):
 
 # Test Kolmogorova-Smirnova
 def KS(x,alfa=0.05):
-    D, p_ks = kstest(x, 'norm')#, args=(0, 1))
+
+    D, p_ks = kstest(x, 'norm') # args=(np.mean(x), np.std(x, ddof=1)))
+
     if p_ks < alfa:
         return 0
     else:
@@ -42,10 +42,13 @@ def KS(x,alfa=0.05):
 liczba_ks = 0
 liczba_sw = 0
 
+
 n = 10
 u = 10
 
+
 for i in range(n):
+#    i = norm.rvs(size=u)
     i = generator_liczb_losowych(-3, 3, u)
     x = i
     KS(x)
@@ -53,9 +56,19 @@ for i in range(n):
     liczba_ks += KS(x)
     liczba_sw += SW(x)
 
-#sys.stdout = open('results.csv', 'a')
 
-print('Test KS dla {} losowan {} liczb: {}'.format(n, u, liczba_ks/n))
-print('Test SW dla {} losowan {} liczb: {}'.format(n, u, liczba_sw/n))
+sys.stdout = open('results2.csv', 'a')
+print('generator Ko-Sm,{},{},{}'.format(n, u, liczba_ks/n))
+print('generator Sh-Wi,{},{},{}'.format(n, u, liczba_sw/n))
 
-#sys.stdout.close()
+sys.stdout.close()
+
+# (mu, sigma) = norm.fit(x)
+# n, bins, patches = plt.hist(x, 60, density=1)
+# y = norm.pdf(bins, mu, sigma)
+# plt.plot(bins, y, 'r--', linewidth = 2)
+# plt.ylabel('y')
+# plt.xlabel('X')
+# plt.title('Histogram wygenerowanych liczb z dopasowanym rozkładem normalnym')
+# plt.show()
+
