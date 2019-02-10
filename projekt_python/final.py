@@ -32,7 +32,7 @@ def SW(x,alfa=0.05):
 
 # Test Kolmogorova-Smirnova
 def KS(x,alfa=0.05):
-    D, p_ks = kstest(x, 'norm', args=(np.mean(x), np.std(x, ddof=1)))
+    D, p_ks = kstest(x, 'norm')#, args=(0, 1))
     if p_ks < alfa:
         return 0
     else:
@@ -43,7 +43,7 @@ liczba_ks = 0
 liczba_sw = 0
 
 n = 10
-u = 1000
+u = 10
 
 for i in range(n):
     i = generator_liczb_losowych(-3, 3, u)
@@ -53,9 +53,9 @@ for i in range(n):
     liczba_ks += KS(x)
     liczba_sw += SW(x)
 
-sys.stdout = open('results.csv', 'a')
+#sys.stdout = open('results.csv', 'a')
 
 print('Test KS dla {} losowan {} liczb: {}'.format(n, u, liczba_ks/n))
 print('Test SW dla {} losowan {} liczb: {}'.format(n, u, liczba_sw/n))
 
-sys.stdout.close()
+#sys.stdout.close()

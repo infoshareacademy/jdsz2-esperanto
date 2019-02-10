@@ -33,7 +33,7 @@ def SW(x,alfa=0.05):
 
 
 def KS(x,alfa=0.05):
-    D, p_ks = kstest(x, 'norm', args=(np.mean(x), np.std(x, ddof=1)))
+    D, p_ks = kstest(x, 'norm')#, args=(np.mean(x), np.std(x, ddof=1)))
     # print('Test Kolmogorova-Smirnova:\n p-value = ',p_ks)
     if p_ks < alfa:
         return 0
@@ -47,8 +47,8 @@ def KS(x,alfa=0.05):
 
 liczba_ks= 0
 liczba_sw = 0
-n = 1000
-u = 1000
+n = 4000
+u = 10
 for i in range(n):
     i = norm.rvs(size = u)
     x = i
