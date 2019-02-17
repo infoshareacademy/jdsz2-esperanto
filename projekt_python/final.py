@@ -32,7 +32,7 @@ def SW(x,alfa=0.05):
 # Test Kolmogorova-Smirnova
 def KS(x,alfa=0.05):
 
-    D, p_ks = kstest(x, 'norm', args=(0,1)) # args=(np.mean(x), np.std(x, ddof=1)))
+    D, p_ks = kstest(x, 'norm') # args=(np.mean(x), np.std(x, ddof=1)))
 
     if p_ks < alfa:
         return 0
@@ -54,35 +54,33 @@ liczba_sw = 0
 liczba_l = 0
 
 
-n = 100
-u = 4000
-
-
+n = 10
+u = 10
 for i in range(n):
 #    i = norm.rvs(size=u)
     i = generator_liczb_losowych(-3, 3, u)
     x = i
     KS(x)
     SW(x)
-   # L(x)
     liczba_ks += KS(x)
     liczba_sw += SW(x)
-   # liczba_l += L(x)
 
 
-#sys.stdout = open('results2.csv', 'a')
-print('Test KS dla {} losowan z generatora {} liczb: {}'.format(n, u, liczba_ks/n))
-print('Test SW dla {} losowan z generatora {} liczb: {}'.format(n, u, liczba_sw/n))
-#print('Test L dla {} losowan z generatora {} liczb: {}'.format(n, u, liczba_l/n))
 
-#sys.stdout.close()
+sys.stdout = open('results2.csv', 'a')
+print('generator Ko-Sm,{},{},{}'.format(n, u, liczba_ks/n))
+print('generator Sh-Wi,{},{},{}'.format(n, u, liczba_sw/n))
+#print('losowe Ko-Sm,{},{},{}'.format(n, u, liczba_ks/n))
+#print('losowe Sh-Wi,{},{},{}'.format(n, u, liczba_sw/n))
+sys.stdout.close()
 
-# (mu, sigma) = norm.fit(x)
-# n, bins, patches = plt.hist(x, 60, density=1)
-# y = norm.pdf(bins, mu, sigma)
-# plt.plot(bins, y, 'r--', linewidth = 2)
-# plt.ylabel('y')
-# plt.xlabel('X')
-# plt.title('Histogram wygenerowanych liczb z dopasowanym rozkładem normalnym')
-# plt.show()
+
+(mu, sigma) = norm.fit(x)
+n, bins, patches = plt.hist(x, 60, density=1)
+y = norm.pdf(bins, mu, sigma)
+plt.plot(bins, y, 'r--', linewidth = 2)
+plt.ylabel('y')
+plt.xlabel('X')
+plt.title('Histogram wygenerowanych liczb z dopasowanym rozkładem normalnym')
+plt.show()
 

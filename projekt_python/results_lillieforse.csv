@@ -1,0 +1,19 @@
+
+Test L dla 40 losowan z generatora 1000 liczb: 0.955
+Test L dla 40 losowan z normalnego 1000 liczb: 0.95
+Test L dla 100 losowan z generatora 1000 liczb: 0.949
+Test L dla 100 losowan z normalnego 1000 liczb: 0.95
+Test L dla 10 losowan z generatora 1000 liczb: 0.946
+Test L dla 10 losowan z normalnego 1000 liczb: 0.952
+Test L dla 10 losowan z generatora 2000 liczb: 0.9555
+Test L dla 10 losowan z normalnego 2000 liczb: 0.9545
+Test L dla 40 losowan z generatora 2000 liczb: 0.957
+Test L dla 40 losowan z normalnego 2000 liczb: 0.9545
+Test L dla 100 losowan z generatora 2000 liczb: 0.9505
+Test L dla 100 losowan z normalnego 2000 liczb: 0.9495
+Test L dla 10 losowan z generatora 3000 liczb: 0.9543333333333334
+Test L dla 10 losowan z normalnego 3000 liczb: 0.9473333333333334
+Test L dla 40 losowan z generatora 3000 liczb: 0.949
+Test L dla 40 losowan z normalnego 3000 liczb: 0.956
+Test L dla 100 losowan z generatora 3000 liczb: 0.953
+Test L dla 100 losowan z normalnego 3000 liczb: 0.9506666666666667
