@@ -4,6 +4,7 @@ import numpy as np
 from scipy.stats import norm, kstest, shapiro
 import matplotlib.pyplot as plt
 import matplotlib.mlab as mlab
+from statsmodels.stats.diagnostic import lilliefors
 
 # -- author: -- Karolina / Justyna / Karol / Lukasz --
 
@@ -31,20 +32,30 @@ def SW(x,alfa=0.05):
 # Test Kolmogorova-Smirnova
 def KS(x,alfa=0.05):
 
-    D, p_ks = kstest(x, 'norm') # args=(np.mean(x), np.std(x, ddof=1)))
+    D, p_ks = kstest(x, 'norm', args=(0,1)) # args=(np.mean(x), np.std(x, ddof=1)))
 
     if p_ks < alfa:
         return 0
     else:
         return 1
 
+# Test Lillieforsa
+def L(x, alfa=0.05):
+    D, p_l = lilliefors(x, 'norm')#, args=(0, 1))
+    if p_l < alfa:
+        return 0
+    else:
+        return 1
+
+
 
 liczba_ks = 0
 liczba_sw = 0
+liczba_l = 0
 
 
-n = 10
-u = 10
+n = 100
+u = 4000
 
 
 for i in range(n):
@@ -53,15 +64,18 @@ for i in range(n):
     x = i
     KS(x)
     SW(x)
+   # L(x)
     liczba_ks += KS(x)
     liczba_sw += SW(x)
+   # liczba_l += L(x)
 
 
-sys.stdout = open('results2.csv', 'a')
-print('generator Ko-Sm,{},{},{}'.format(n, u, liczba_ks/n))
-print('generator Sh-Wi,{},{},{}'.format(n, u, liczba_sw/n))
+#sys.stdout = open('results2.csv', 'a')
+print('Test KS dla {} losowan z generatora {} liczb: {}'.format(n, u, liczba_ks/n))
+print('Test SW dla {} losowan z generatora {} liczb: {}'.format(n, u, liczba_sw/n))
+#print('Test L dla {} losowan z generatora {} liczb: {}'.format(n, u, liczba_l/n))
 
-sys.stdout.close()
+#sys.stdout.close()
 
 # (mu, sigma) = norm.fit(x)
 # n, bins, patches = plt.hist(x, 60, density=1)
