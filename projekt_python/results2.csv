@@ -49,3 +49,9 @@ generator Ko-Sm,100,4000,0.96
 generator Sh-Wi,100,4000,0.25
 generator Ko-Sm,100,3000,0.89
 generator Sh-Wi,100,3000,0.53
+generator Ko-Sm,10,10,0.9
+generator Sh-Wi,10,10,1.0
+generator Ko-Sm,100,4000,0.0
+generator Sh-Wi,100,4000,0.0
+generator Ko-Sm,10,10,1.0
+generator Sh-Wi,10,10,1.0
