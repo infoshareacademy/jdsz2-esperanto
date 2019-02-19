@@ -11,8 +11,6 @@ dataset = pd.read_csv('nyc-rolling-sales.csv')
 columns_to_delete = ['Unnamed: 0', 'NEIGHBORHOOD', 'TAX CLASS AT PRESENT', 'BLOCK', 'LOT',
                      'SALE DATE', 'EASE-MENT', 'BUILDING CLASS AT PRESENT', 'ADDRESS',
                      'TOTAL UNITS', 'APARTMENT NUMBER', 'ZIP CODE', 'LAND SQUARE FEET']
-columns_to_regression = ['BOROUGH', 'TAX CLASS AT TIME OF SALE', 'RESIDENTIAL UNITS',
-                         'COMMERCIAL UNITS', 'GROSS SQUARE FEET', 'YEAR BUILT']
 columns_to_model = ['BOROUGH', 'BUILDING CLASS CATEGORY', 'TAX CLASS AT TIME OF SALE',
                     'BUILDING CLASS AT TIME OF SALE', 'RESIDENTIAL UNITS', 'COMMERCIAL UNITS',
                     'GROSS SQUARE FEET', 'YEAR BUILT']
@@ -26,8 +24,8 @@ dataset.dropna(inplace=True)
 pd.set_option('display.max_columns',8)
 
 # oczyszczone X i y do analiz:
-X = dataset[columns_to_regression]
+X = dataset[columns_to_model]
 y = dataset['SALE PRICE']
 
-#print(X)
-#print(y)
+print(X)
+print(y)
