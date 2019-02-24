@@ -23,9 +23,9 @@ print(X)
 #dataset['GROSS SQUARE FEET'].dropna(inplace=True)
 
 
-# # for f_name in columns_to_model:
-# #     print(f_name, ' ', dataset[f_name].unique())
-# print(len(dataset['GROSS SQUARE FEET'].unique()))
+for f_name in columns_to_model:
+     print(f_name, ' ', dataset[f_name].unique())
+#print(len(dataset['GROSS SQUARE FEET'].unique()))
 # # TODO: zero year, gross square feet
 #
 # a = dataset['GROSS SQUARE FEET'].unique()
