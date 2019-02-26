@@ -47,8 +47,8 @@ def KS(x,alfa=0.05):
 
 liczba_ks= 0
 liczba_sw = 0
-n = 4000
-u = 10
+n = 1000
+u = 4500
 for i in range(n):
     i = norm.rvs(size = u)
     x = i

@@ -33,7 +33,7 @@ def test_lillieforsa(x, alfa=0.05):
 liczba_l = 0
 
 n = 10
-u = 100
+u = 1000
 
 for i in range(n):
     x = generator_liczb_losowych(-3, 3, u)
@@ -54,3 +54,12 @@ with open('results_lillieforse.csv', 'a+') as file:
 # TODO: 'with' gwarantuje, że jak coś się wykrzaczy w bloku pod nim to pliki, zmienne, pamięć itd. zostanie w stanie
 #  sprzed tego bloku. Dodatkowo nie musisz nużywać stodout, czyli nie musisz nadpisywać defaultowego struminia zapisu
 #  danych
+    i = norm.rvs(size = u)
+    x = i
+    L(x)
+    liczba_los += L(x)
+
+sys.stdout = open('results_lillieforse.csv', 'a')
+print('generator Li-Li,{},{},{}'.format(n, u, liczba_l/n))
+print('losowe Li-Li,{},{},{}'.format(n, u, liczba_los/n))
+sys.stdout.close()

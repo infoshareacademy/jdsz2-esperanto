@@ -4,6 +4,7 @@ import numpy as np
 from scipy.stats import norm, kstest, shapiro
 import matplotlib.pyplot as plt
 import matplotlib.mlab as mlab
+from statsmodels.stats.diagnostic import lilliefors
 
 # -- author: -- Karolina / Justyna / Karol / Lukasz --
 
@@ -30,17 +31,31 @@ def SW(x,alfa=0.05):
 
 # Test Kolmogorova-Smirnova
 def KS(x,alfa=0.05):
+
     D, p_ks = kstest(x, 'norm') # args=(np.mean(x), np.std(x, ddof=1)))
+
     if p_ks < alfa:
         return 0
     else:
         return 1
 
+# Test Lillieforsa
+def L(x, alfa=0.05):
+    D, p_l = lilliefors(x, 'norm')#, args=(0, 1))
+    if p_l < alfa:
+        return 0
+    else:
+        return 1
+
+
+
 liczba_ks = 0
 liczba_sw = 0
-n = 100 # ILOSC TESTOW
-u = 3000 # WIELKOSC ZBIORU
+liczba_l = 0
 
+
+n = 10
+u = 10
 for i in range(n):
 #    i = norm.rvs(size=u)
     i = generator_liczb_losowych(-3, 3, u)
@@ -51,12 +66,14 @@ for i in range(n):
     liczba_sw += SW(x)
 
 
+
 sys.stdout = open('results2.csv', 'a')
 print('generator Ko-Sm,{},{},{}'.format(n, u, liczba_ks/n))
 print('generator Sh-Wi,{},{},{}'.format(n, u, liczba_sw/n))
 #print('losowe Ko-Sm,{},{},{}'.format(n, u, liczba_ks/n))
 #print('losowe Sh-Wi,{},{},{}'.format(n, u, liczba_sw/n))
 sys.stdout.close()
+
 
 (mu, sigma) = norm.fit(x)
 n, bins, patches = plt.hist(x, 60, density=1)
