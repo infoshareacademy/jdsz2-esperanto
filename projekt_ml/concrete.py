@@ -6,13 +6,14 @@ from sklearn import linear_model
 from sklearn import metrics
 import csv
 
-
+## --------------------- import dataset ---------------------
+## https://archive.ics.uci.edu/ml/datasets/Concrete+Compressive+Strength
 pd.set_option('display.max_columns',10)
 dataset = pd.read_csv('Concrete_Data.csv',quotechar='"', decimal=',', skipinitialspace=True)
-#ds2 = re.compile('(?<=\d),(?=\d)')
 dataset.to_csv('Concrete_Corr', sep=',', encoding='utf-8', quotechar='"', decimal='.')
-print(dataset)
 
+
+## --------------- define features and target ---------------
 #print('X\n',dataset.isnull().any())
 columns_to_model = ['Cement', 'Blast Furnace Slag', 'Fly Ash', 'Water', 'Superplasticizer',
                     'Coarse Aggregate', 'Fine Aggregate', 'Age']
@@ -21,18 +22,16 @@ y = dataset['Concrete compressive strength']
 #print(y.head())
 
 
+## ------------- feature dependencies on target -------------
+for i in columns_to_model:
+    plt.scatter(X[i], y)
+    plt.title(i)
+#    plt.show()
 
-# for i in columns_to_model:
-#     plt.scatter(X[i], y)
-#     plt.title(i)
-#     plt.show()
 
-
-#dataset.astype(float)
-#print(dataset.dtypes)
+## ------------ dataset training and regression -------------
 # podzial datasetu na dane treningowe i testowe
 X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.25, random_state=101)
-
 
 # regresja liniowa:
 regr = linear_model.LinearRegression(normalize=True)
