@@ -1,13 +1,17 @@
 import pandas as pd
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn import linear_model
 from sklearn import metrics
 from sklearn.preprocessing import Imputer
-from sklearn.metrics import mean_absolute_error, make_scorer, mean_squared_error
+from sklearn.metrics import mean_absolute_error, make_scorer, mean_squared_error, accuracy_score
 from sklearn.model_selection import cross_val_score, KFold
 from sklearn.tree import DecisionTreeRegressor
+from xgboost import XGBRegressor
+from sklearn.svm import SVR
+from sklearn import svm
+
 
 ## --------------------- import dataset ---------------------
 ## https://archive.ics.uci.edu/ml/datasets/Concrete+Compressive+Strength
@@ -76,9 +80,8 @@ print('                +++ Cross Validation  +++               ')
 results_MAE = cross_val_score(regr, X_train, y_train, cv=kfold, scoring=scorer_MAE)
 results_MSE = cross_val_score(regr, X_train, y_train, cv=kfold, scoring=scorer_MSE)
 
-print('Min_MAE:  {}   Max_MAE:  {}'.format(min(results_MAE), max(results_MAE)))
-print('Min_MSE:  {}   Max_MSE:  {}'.format(min(results_MSE), max(results_MSE)))
-
+print('Mean_MAE:  {}'.format((results_MAE.mean())))
+print('Mean_MSE:  {}'.format((results_MSE.mean())))
 
 print('________________________________________________________')
 print('                  DecisionTreeRegressor                 ')
@@ -87,14 +90,51 @@ for max_features in [1,2,3,4,5,6,7,8]:
     dtree = DecisionTreeRegressor(max_features=max_features, random_state=None, max_depth=None,
                                   min_samples_split=2, min_samples_leaf=1, min_weight_fraction_leaf=0.0)
     dtree.fit(X_train, y_train)
-    y_pred = dtree.predict(X_test)
-    mae = mean_absolute_error(y_test, y_pred)
-    r2 = metrics.r2_score(y_test, y_pred)
+    y_pred_tree = dtree.predict(X_test)
+    mae = mean_absolute_error(y_test, y_pred_tree)
+    r2 = metrics.r2_score(y_test, y_pred_tree)
     print('For max features: {}    Mean Absolute Error:  {}    R^2:  {}'.format(max_features, mae, r2))
 
 print('                +++ Cross Validation  +++               ')
 results_MAE = cross_val_score(dtree, X_train, y_train, cv=kfold, scoring=scorer_MAE)
 results_MSE = cross_val_score(dtree, X_train, y_train, cv=kfold, scoring=scorer_MSE)
 
-print('Min_MAE:  {}   Max_MAE:  {}'.format(min(results_MAE), max(results_MAE)))
-print('Min_MSE:  {}   Max_MSE:  {}'.format(min(results_MSE), max(results_MSE)))
+print('Mean_MAE:  {}'.format((results_MAE.mean())))
+print('Mean_MSE:  {}'.format((results_MSE.mean())))
+
+
+print('________________________________________________________')
+print('                         XGBoost                        ')
+print('________________________________________________________')
+
+
+clf_xgbr = XGBRegressor()
+clf_xgbr.fit(X_train, y_train, verbose=False)
+
+# Dokonujemy predykcji dla danych testowych przy użyciu XGBClassifier.
+y_pred_xgb = clf_xgbr.predict(X_test)
+
+print("Mean Absolute Error dla danych walidacyjnych : " + str(mean_absolute_error(y_pred_xgb, y_test)))
+
+results_MAE = cross_val_score(clf_xgbr, X_train, y_train, cv=kfold, scoring=scorer_MAE)
+results_MSE = cross_val_score(clf_xgbr, X_train, y_train, cv=kfold, scoring=scorer_MSE)
+
+# Wypisujemy wynik cross-validacji.
+print('Mean_MAE:  {}'.format((results_MAE.mean())))
+print('Mean_MSE:  {}'.format((results_MSE.mean())))
+
+
+print('________________________________________________________')
+print('                           SVR                          ')
+print('________________________________________________________')
+
+svr_lin = svm.SVR(kernel='linear')
+svr_lin.fit(X_train, y_train)
+y_lin = svr_lin.predict(X_test)
+
+print('R^2:', metrics.r2_score(y_test, y_lin))
+print('Mean Squared Error:', metrics.mean_squared_error(y_test, y_lin))
+print('Mean Absolute Error:', metrics.mean_absolute_error(y_test, y_lin))
+print('Median Absolute Error:', metrics.median_absolute_error(y_test, y_lin))
+
+# #############################################################################
