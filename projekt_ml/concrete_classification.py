@@ -13,25 +13,33 @@ from sklearn.tree import DecisionTreeRegressor
 # from xgboost import XGBRegressor
 from sklearn.svm import SVR
 from sklearn import svm
+from xgboost import XGBRegressor
 
 
 def main():
-    pd.set_option('display.max_columns',10)
-    df = pd.read_csv('Concrete_Data.csv',quotechar='"', decimal=',', skipinitialspace=True)
-    df.to_csv('Concrete_Corr', sep=',', encoding='utf-8', quotechar='"', decimal='.')
+    pd.set_option('display.max_columns', 10)
+    df = pd.read_csv('Concrete_Corr', decimal='.', skipinitialspace=True)
 
     columns_to_model = ['Cement', 'Blast Furnace Slag', 'Fly Ash', 'Water', 'Superplasticizer',
                         'Coarse Aggregate', 'Fine Aggregate', 'Age']
 
     for row in df.itertuples():
-        c = math.floor(row._9 / 5)
+        c = math.floor(row._10 / 5)
         df.at[row.Index, 'Concrete compressive strength'] = c * 5
-        print(row)
 
     X = df[columns_to_model]
     y = df['Concrete compressive strength']
 
-    print(X, y, df['Age'])
+    X_train, X_test, y_train, y_test = train_test_split(X.as_matrix(), y.as_matrix(), test_size=0.25, random_state=11)
+
+    clf = XGBRegressor()
+    clf.fit(X_train, y_train, verbose=False)
+    predictions = clf.predict(X_test)
+    print("Mean Absolute Error : " + str(mean_absolute_error(predictions, y_test)))
+    scorer = make_scorer(mean_absolute_error)
+    kfold = KFold(n_splits=5, random_state=11)
+    results = cross_val_score(clf, X_train, y_train, cv=kfold, scoring=scorer)
+    print(np.mean(results))
 
 
 if __name__ == '__main__':

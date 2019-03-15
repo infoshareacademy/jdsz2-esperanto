@@ -17,7 +17,7 @@ from sklearn import svm
 ## https://archive.ics.uci.edu/ml/datasets/Concrete+Compressive+Strength
 pd.set_option('display.max_columns',10)
 dataset = pd.read_csv('Concrete_Data.csv',quotechar='"', decimal=',', skipinitialspace=True)
-dataset.to_csv('Concrete_Corr', sep=',', encoding='utf-8', quotechar='"', decimal='.')
+dataset.to_csv('Concrete_Corr.csv', sep=',', encoding='utf-8', quotechar='"', decimal='.')
 
 ## Features -- quantitative -- kg in a m3 mixture -- Input Variables:
 # 1-Cement, 2-Blast Furnace Slag, 3-Fly Ash, 4-Water, 5-Superplasticizer, 6-Coarse Aggregate, 7-Fine Aggregate
