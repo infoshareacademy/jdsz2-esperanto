@@ -9,9 +9,10 @@ from sklearn.metrics import mean_absolute_error, make_scorer, mean_squared_error
 from sklearn.model_selection import cross_val_score, KFold
 from sklearn.tree import DecisionTreeRegressor
 from xgboost import XGBRegressor
-from sklearn.svm import SVR
 from sklearn import svm
+import warnings
 
+warnings.filterwarnings("ignore")
 
 ## --------------------- import dataset ---------------------
 ## https://archive.ics.uci.edu/ml/datasets/Concrete+Compressive+Strength
@@ -114,7 +115,7 @@ clf_xgbr.fit(X_train, y_train, verbose=False)
 # Dokonujemy predykcji dla danych testowych przy użyciu XGBClassifier.
 y_pred_xgb = clf_xgbr.predict(X_test)
 
-print("Mean Absolute Error dla danych walidacyjnych : " + str(mean_absolute_error(y_pred_xgb, y_test)))
+print("Mean Absolute Error dla danych testowych : " + str(mean_absolute_error(y_pred_xgb, y_test)))
 
 results_MAE = cross_val_score(clf_xgbr, X_train, y_train, cv=kfold, scoring=scorer_MAE)
 results_MSE = cross_val_score(clf_xgbr, X_train, y_train, cv=kfold, scoring=scorer_MSE)
@@ -136,5 +137,14 @@ print('R^2:', metrics.r2_score(y_test, y_lin))
 print('Mean Squared Error:', metrics.mean_squared_error(y_test, y_lin))
 print('Mean Absolute Error:', metrics.mean_absolute_error(y_test, y_lin))
 print('Median Absolute Error:', metrics.median_absolute_error(y_test, y_lin))
+
+svr_rbf = svm.SVR(kernel='rbf', C=1e3, gamma=0.1)
+svr_rbf.fit(X_train, y_train)
+y_rbf = svr_rbf.predict(X_test)
+
+print('R^2:', metrics.r2_score(y_test, y_rbf))
+print('Mean Absolute Error:', metrics.mean_absolute_error(y_test, y_rbf))
+print('Mean Squared Error:', metrics.mean_squared_error(y_test, y_rbf))
+print('Median Absolute Error:', metrics.median_absolute_error(y_test, y_rbf))
 
 # #############################################################################
