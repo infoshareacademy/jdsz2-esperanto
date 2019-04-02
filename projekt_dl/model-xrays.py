@@ -40,10 +40,10 @@ def create_model(params):
     model.add(MaxPooling2D(pool_size=(2, 2)))
 
     model.add(Flatten())
-    model.add(Dense(256))  # calculate new density based on image size and quantity
+    model.add(Dense(256))  # calculate new density based on image size and quantity ?
     model.add(Activation('relu'))
     model.add(Dropout(params.drop_rate))
-    model.add(Dense(1))    # calculate new density based on image size and quantity
+    model.add(Dense(1))    # calculate new density based on image size and quantity ?
     model.add(Activation('sigmoid'))
 
     model.compile(loss='binary_crossentropy',
@@ -127,9 +127,9 @@ if __name__ == "__main__":
                         help="Images will be resized to this height.")
     parser.add_argument('--img_width', type=int, default=150,
                         help="Images will be resized to this width.")
-    parser.add_argument('--epochs', type=int, default=100,
+    parser.add_argument('--epochs', type=int, default=50,
                         help="Epochs of training.")
-    parser.add_argument('--batch_size', type=int, default=16,
+    parser.add_argument('--batch_size', type=int, default=20,
                         help="Batch size.")
     parser.add_argument('--workers', type=int, default=4,
                         help="Maximum number of that will execute the generator.")
@@ -137,7 +137,7 @@ if __name__ == "__main__":
                         help="RMSprop learning rate.")
     parser.add_argument('--drop_rate', type=float, default=0.5,
                         help="Dense layer dropout rate.")
-    parser.add_argument('--rotation_range', type=float, default=0.1,
+    parser.add_argument('--rotation_range', type=float, default=0.2,
                         help="Shear intensity (angle) in counter-clockwise direction in degrees.")
     parser.add_argument('--zoom_range', type=float, default=0.1,
                         help="Range for random zoom: [1 - zoom_range, 1 + zoom_range].")
