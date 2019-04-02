@@ -1,3 +1,5 @@
+# https://www.kaggle.com/paultimothymooney/chest-xray-pneumonia#chest_xray.zip
+
 # data/ folder directory structure:
 #     train/
 #         NORMAL    - 1341 images
@@ -141,7 +143,7 @@ if __name__ == "__main__":
                         help="Range for random zoom: [1 - zoom_range, 1 + zoom_range].")
     parser.add_argument('--log_dir', type=str, default='logs/conv',
                         help="Where to save TensorBoard logs.")
-    parser.add_argument('--save_path', type=str, default='conv_model',
+    parser.add_argument('--save_path', type=str, default='model-xrays',
                         help="Where to save model weights after training.")
     parser.add_argument('--resume_run', action='store_const', const=True, default=False,
                         help='Load the model weights and continue training.')
