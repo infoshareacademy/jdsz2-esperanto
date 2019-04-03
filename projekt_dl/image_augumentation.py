@@ -5,7 +5,7 @@ from os import mkdir
 preview_path = 'preview'
 
 datagen = ImageDataGenerator(
-    rotation_range=40,
+    rotation_range=10,
     width_shift_range=0.2,
     height_shift_range=0.2,
     shear_range=0.2,
@@ -14,8 +14,8 @@ datagen = ImageDataGenerator(
     fill_mode='nearest')
 
 img_1 = load_img('data/train/NORMAL/IM-0115-0001.jpeg')  # this is a PIL image
-img_2 = load_img('data/train/NORMAL/IM-0140-0001.jpeg')  # this is a PIL image
-x = np.stack([img_to_array(img_1), img_to_array(img_2)])  # this is a Numpy array with shape (2, 3, 150, 150)
+img_2 = load_img('data/train/NORMAL/IM-0166-0001.jpeg')  # this is a PIL image
+x = np.stack([img_to_array(img_2), img_to_array(img_2)])  # this is a Numpy array with shape (2, 3, 150, 150)
 
 try:
     # Create target Directory
