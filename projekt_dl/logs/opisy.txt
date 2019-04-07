@@ -1,0 +1,43 @@
+1 - 10 epok
+
+    model = Sequential()
+    model.add(Conv2D(32, (3, 3), input_shape=input_shape))
+    model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+
+    model.add(Conv2D(64, (3, 3)))
+    model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+
+    model.add(Conv2D(128, (3, 3)))
+    model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+
+    model.add(Flatten())
+    model.add(Dense(256))  # calculate new density based on image size and quantity ?
+    model.add(Activation('relu'))
+    model.add(Dropout(params.drop_rate))
+    model.add(Dense(1))    # calculate new density based on image size and quantity ?
+    model.add(Activation('sigmoid'))
+
+2 - 50 epok
+
+    model = Sequential()
+    model.add(Conv2D(32, (3, 3), input_shape=input_shape))
+    model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+
+    model.add(Conv2D(64, (3, 3)))
+    model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+
+    model.add(Conv2D(64, (3, 3)))
+    model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+
+    model.add(Flatten())
+    model.add(Dense(256))  # calculate new density based on image size and quantity ?
+    model.add(Activation('relu'))
+    model.add(Dropout(params.drop_rate))
+    model.add(Dense(1))    # calculate new density based on image size and quantity ?
+    model.add(Activation('sigmoid'))
