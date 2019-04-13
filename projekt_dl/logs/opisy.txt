@@ -154,3 +154,39 @@
     parser.add_argument('--epochs', type=int, default=4,
                         help="Epochs of training.")
     parser.add_argument('--batch_size', type=int, default=64,
+
+7
+
+    parser.add_argument('--epochs', type=int, default=14,
+                        help="Epochs of training.")
+    parser.add_argument('--batch_size', type=int, default=64,
+                        help="Batch size.")
+
+def create_model(params):
+    input_shape = (params.img_height, params.img_width, 3)
+
+    model = Sequential()
+    model.add(Dense(32, input_shape=input_shape))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Activation('relu'))
+
+    model.add(Conv2D(128, (3, 3)))
+    model.add(Dropout(0.5))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Activation('relu'))
+
+    model.add(Conv2D(64, (3, 3)))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Activation('relu'))
+
+    model.add(Flatten())
+    model.add(Dense(256))
+    model.add(Activation('relu'))
+    model.add(Dropout(0.3))
+    model.add(Dense(1))
+    model.add(Activation('sigmoid'))
+
+    model.compile(loss='binary_crossentropy',
+                  optimizer=RMSprop(lr=0.001),
+                  metrics=[keras_metrics.precision(), keras_metrics.recall(), keras_metrics.f1_score()])
+                  # metrics=['accuracy'])

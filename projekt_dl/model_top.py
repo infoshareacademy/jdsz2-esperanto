@@ -101,7 +101,7 @@ if __name__ == "__main__":
                         help="Number of training samples.")
     parser.add_argument('--nb_val_samples', type=int, default=624,
                         help="Number of test samples.")
-    parser.add_argument('--epochs', type=int, default=50,
+    parser.add_argument('--epochs', type=int, default=5,
                         help="Epochs of training.")
     parser.add_argument('--batch_size', type=int, default=16,
                         help="Batch size.")
