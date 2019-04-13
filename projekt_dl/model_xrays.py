@@ -17,41 +17,48 @@ import warnings
 
 from keras import backend as K
 from keras.callbacks import TensorBoard
-from keras.layers import Conv2D, MaxPooling2D
+from keras.layers import Conv2D, MaxPooling2D, GlobalAveragePooling2D
 from keras.layers import Activation, Dropout, Flatten, Dense
 from keras.models import Sequential
-from keras.optimizers import RMSprop
+import keras_metrics
+from keras.optimizers import RMSprop, Adam
 from keras.preprocessing.image import ImageDataGenerator
+from keras.callbacks import ReduceLROnPlateau , ModelCheckpoint , LearningRateScheduler
+import numpy as np
+from keras.callbacks import Callback
+from sklearn.metrics import confusion_matrix, f1_score, precision_score, recall_score
+
+
 
 def create_model(params):
     input_shape = (params.img_height, params.img_width, 3)
 
     model = Sequential()
-    model.add(Conv2D(16, (3, 3), input_shape=input_shape))
-    model.add(Activation('relu'))
+    model.add(Dense(32, input_shape=input_shape))
     model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Activation('relu'))
 
-    model.add(Conv2D(80, (3, 3)))
-    model.add(Activation('relu'))
+    model.add(Conv2D(128, (3, 3)))
+    model.add(Dropout(0.5))
     model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Activation('relu'))
 
-    model.add(Conv2D(96, (3, 3)))
-    model.add(Activation('relu'))
+    model.add(Conv2D(64, (3, 3)))
     model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Activation('relu'))
 
     model.add(Flatten())
-    model.add(Dense(256))  # calculate new density based on image size and quantity ?
+    model.add(Dense(256))
     model.add(Activation('relu'))
-    model.add(Dropout(params.drop_rate))
-    model.add(Dense(1))    # calculate new density based on image size and quantity ?
+    model.add(Dropout(0.3))
+    model.add(Dense(1))
     model.add(Activation('sigmoid'))
 
     model.compile(loss='binary_crossentropy',
-                  optimizer=RMSprop(lr=params.learning_rate),
-                  metrics=['accuracy'])
-
+                  optimizer=RMSprop(lr=0.001),
+                  metrics=[keras_metrics.precision(), keras_metrics.recall(), keras_metrics.f1_score()])
+                  # metrics=['accuracy'])
     return model
-
 
 def create_data_generators(params):
     # this is the augmentation configuration we will use for training
@@ -70,23 +77,23 @@ def create_data_generators(params):
         batch_size=params.batch_size,
         class_mode='binary')
 
-    validation_generator = test_datagen.flow_from_directory(
-        params.val_data_dir,
+    test_generator = test_datagen.flow_from_directory(
+        params.test_data_dir,
         target_size=(params.img_height, params.img_width),
         batch_size=params.batch_size,
         class_mode='binary')
 
-    return train_generator, validation_generator
+    return train_generator, test_generator
 
 
-def train_model(model, train_generator, validation_generator, params):
+def train_model(model, train_generator, test_generator, params):
     # fit model
     return model.fit_generator(
         train_generator,
         steps_per_epoch=params.nb_train_samples // params.batch_size,
         epochs=params.epochs,
-        validation_data=validation_generator,
-        validation_steps=params.nb_val_samples // params.batch_size,
+        validation_data=test_generator,
+        validation_steps=params.nb_test_samples // params.batch_size,
         workers=params.workers,
         callbacks=[TensorBoard(log_dir=params.log_dir)])
 
@@ -102,16 +109,14 @@ def main(params):
         model.load_weights(params.save_path)
         log.info("Loaded weights from: %s", params.save_path)
 
-    train_generator, validation_generator = create_data_generators(params)
+    train_generator, test_generator = create_data_generators(params)
     log.info("Created training and test data generators.")
 
-    train_model(model, train_generator, validation_generator, params)
+    train_model(model, train_generator, test_generator, params)
     log.info("Training finished!")
 
     model.save_weights(params.save_path)
     log.info("Saved weights to: %s", params.save_path)
-
-# check weight and heigh + deformations
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -119,24 +124,20 @@ if __name__ == "__main__":
                         help="Path to directory with training data.")
     parser.add_argument('--nb_train_samples', type=int, default=5216,
                         help="Number of training samples.")
-    parser.add_argument('--val_data_dir', type=str, default='data/test',
+    parser.add_argument('--test_data_dir', type=str, default='data/test',
                         help="Path to directory with test data.")
-    parser.add_argument('--nb_val_samples', type=int, default=624,
+    parser.add_argument('--nb_test_samples', type=int, default=624,
                         help="Number of test samples.")
     parser.add_argument('--img_height', type=int, default=150,
                         help="Images will be resized to this height.")
     parser.add_argument('--img_width', type=int, default=150,
                         help="Images will be resized to this width.")
-    parser.add_argument('--epochs', type=int, default=10,
+    parser.add_argument('--epochs', type=int, default=4,
                         help="Epochs of training.")
     parser.add_argument('--batch_size', type=int, default=64,
                         help="Batch size.")
     parser.add_argument('--workers', type=int, default=4,
                         help="Maximum number of that will execute the generator.")
-    parser.add_argument('--learning_rate', type=float, default=0.001,
-                        help="RMSprop learning rate.")
-    parser.add_argument('--drop_rate', type=float, default=0.5,
-                        help="Dense layer dropout rate.")
     parser.add_argument('--rotation_range', type=float, default=0.2,
                         help="Shear intensity (angle) in counter-clockwise direction in degrees.")
     parser.add_argument('--zoom_range', type=float, default=0.1,
