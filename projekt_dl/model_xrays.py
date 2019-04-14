@@ -20,7 +20,6 @@ from keras.callbacks import TensorBoard
 from keras.layers import Conv2D, MaxPooling2D, GlobalAveragePooling2D
 from keras.layers import Activation, Dropout, Flatten, Dense
 from keras.models import Sequential
-import keras_metrics
 from keras.optimizers import RMSprop, Adam
 from keras.preprocessing.image import ImageDataGenerator
 from keras.callbacks import ReduceLROnPlateau , ModelCheckpoint , LearningRateScheduler

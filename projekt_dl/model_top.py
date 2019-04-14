@@ -1,41 +1,3 @@
-'''This script goes along the blog post
-"Building powerful image classification models using very little data"
-from blog.keras.io.
-It uses data that can be downloaded at:
-https://www.kaggle.com/c/dogs-vs-cats/data
-In our setup, we:
-- created a data/ folder
-- created train/ and validation/ subfolders inside data/
-- created cats/ and dogs/ subfolders inside train/ and validation/
-- put the cat pictures index 0-999 in data/train/cats
-- put the cat pictures index 1000-1400 in data/validation/cats
-- put the dogs pictures index 12500-13499 in data/train/dogs
-- put the dog pictures index 13500-13900 in data/validation/dogs
-So that we have 1000 training examples for each class, and 400 validation examples for each class.
-In summary, this is our directory structure:
-```
-data/
-    train/
-        dogs/
-            dog001.jpg
-            dog002.jpg
-            ...
-        cats/
-            cat001.jpg
-            cat002.jpg
-            ...
-    validation/
-        dogs/
-            dog001.jpg
-            dog002.jpg
-            ...
-        cats/
-            cat001.jpg
-            cat002.jpg
-            ...
-```
-'''
-
 import argparse
 import json
 
@@ -55,7 +17,7 @@ def create_model(params, input_shape):
 
     model.compile(optimizer=RMSprop(lr=params.learning_rate),
                   loss='binary_crossentropy',
-                  metrics=['accuracy'])
+                  metrics=[keras_metrics.precision(), keras_metrics.recall(), keras_metrics.f1_score(), 'accuracy'])
 
     return model
 
@@ -101,7 +63,7 @@ if __name__ == "__main__":
                         help="Number of training samples.")
     parser.add_argument('--nb_val_samples', type=int, default=624,
                         help="Number of test samples.")
-    parser.add_argument('--epochs', type=int, default=5,
+    parser.add_argument('--epochs', type=int, default=15,
                         help="Epochs of training.")
     parser.add_argument('--batch_size', type=int, default=16,
                         help="Batch size.")
@@ -109,7 +71,7 @@ if __name__ == "__main__":
                         help="RMSprop learning rate.")
     parser.add_argument('--drop_rate', type=float, default=0.5,
                         help="Dense layer dropout rate.")
-    parser.add_argument('--log_dir', type=str, default='logs/fc',
+    parser.add_argument('--log_dir', type=str, default='logs/top_imagenet',
                         help="Where to save TensorBoard logs.")
     parser.add_argument('--metrics_path', type=str, default='fc_metrics.json',
                         help="Where to save json with metrics after training.")

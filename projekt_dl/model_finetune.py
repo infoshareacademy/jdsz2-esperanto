@@ -1,5 +1,6 @@
 import argparse
 import json
+import keras_metrics
 
 from keras import applications
 from keras import backend as K
@@ -44,7 +45,7 @@ def create_model(args):
     # and a very slow learning rate.
     model.compile(loss='binary_crossentropy',
                   optimizer=SGD(lr=params.learning_rate, momentum=0.9),
-                  metrics=['accuracy'])
+                  metrics=[keras_metrics.precision(), keras_metrics.recall(), keras_metrics.f1_score(), 'accuracy'])
 
     return model
 
@@ -74,7 +75,7 @@ if __name__ == "__main__":
                         help="Images will be resized to this height.")
     parser.add_argument('--img_width', type=int, default=150,
                         help="Images will be resized to this width.")
-    parser.add_argument('--epochs', type=int, default=5,
+    parser.add_argument('--epochs', type=int, default=15,
                         help="Epochs of training.")
     parser.add_argument('--batch_size', type=int, default=16,
                         help="Batch size.")
@@ -88,7 +89,7 @@ if __name__ == "__main__":
                         help="Shear intensity (angle) in counter-clockwise direction in degrees.")
     parser.add_argument('--zoom_range', type=float, default=0.2,
                         help="Range for random zoom: [1 - zoom_range, 1 + zoom_range].")
-    parser.add_argument('--log_dir', type=str, default='logs/vgg',
+    parser.add_argument('--log_dir', type=str, default='logs/fine_tune',
                         help="Where to save TensorBoard logs.")
     parser.add_argument('--metrics_path', type=str, default='vgg_metrics.json',
                         help="Where to save json with metrics after training.")
