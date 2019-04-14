@@ -34,37 +34,36 @@ def create_model(params):
     input_shape = (params.img_height, params.img_width, 3)
 
     model = Sequential()
-    model.add(Dense(32, input_shape=input_shape))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Conv2D(16, (3, 3), input_shape=input_shape))
     model.add(Activation('relu'))
-
-    model.add(Conv2D(128, (3, 3)))
-    model.add(Dropout(0.5))
     model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Activation('relu'))
 
     model.add(Conv2D(64, (3, 3)))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(0.1))
     model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+
+    model.add(Conv2D(256, (3, 3)))
+    model.add(Dropout(0.2))
+    model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
 
     model.add(Flatten())
-    model.add(Dense(256))
+    model.add(Dense(256))  # calculate new density based on image size and quantity ?
     model.add(Activation('relu'))
-    model.add(Dropout(0.3))
-    model.add(Dense(1))
+    model.add(Dropout(0.8))
+    model.add(Dense(1))    # calculate new density based on image size and quantity ?
     model.add(Activation('sigmoid'))
 
     model.compile(loss='binary_crossentropy',
                   optimizer=RMSprop(lr=0.001),
-                  metrics=[keras_metrics.precision(), keras_metrics.recall(), keras_metrics.f1_score()])
-                  # metrics=['accuracy'])
+                  metrics=[keras_metrics.precision(), keras_metrics.recall(), keras_metrics.f1_score(), 'accuracy'])
     return model
 
 def create_data_generators(params):
     # this is the augmentation configuration we will use for training
     train_datagen = ImageDataGenerator(
         rescale=1. / 255,
-        rotation_range=params.rotation_range,
         zoom_range=params.zoom_range,
         horizontal_flip=True)
 
@@ -132,14 +131,12 @@ if __name__ == "__main__":
                         help="Images will be resized to this height.")
     parser.add_argument('--img_width', type=int, default=150,
                         help="Images will be resized to this width.")
-    parser.add_argument('--epochs', type=int, default=4,
+    parser.add_argument('--epochs', type=int, default=50,
                         help="Epochs of training.")
     parser.add_argument('--batch_size', type=int, default=64,
                         help="Batch size.")
     parser.add_argument('--workers', type=int, default=4,
                         help="Maximum number of that will execute the generator.")
-    parser.add_argument('--rotation_range', type=float, default=0.2,
-                        help="Shear intensity (angle) in counter-clockwise direction in degrees.")
     parser.add_argument('--zoom_range', type=float, default=0.1,
                         help="Range for random zoom: [1 - zoom_range, 1 + zoom_range].")
     parser.add_argument('--log_dir', type=str, default='logs/conv',
